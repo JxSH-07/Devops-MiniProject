@@ -1,3 +1,6 @@
+# force rebuild
+ARG CACHE_BUST=1
+
 FROM python:3.10
 
 WORKDIR /app
