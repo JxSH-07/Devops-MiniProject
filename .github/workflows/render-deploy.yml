@@ -13,15 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Trigger Render Deploy (force latest code)
+      - name: Trigger Render Deployment
         run: |
-          echo "Triggering Render Deploy with latest commit..."
+          echo "Triggering Render Deploy..."
 
           curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-            -H "accept: application/json" \
-            -H "authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "content-type: application/json" \
-            -d '{
-              "clearCache": true,
-              "branch": "main"
-            }'
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json"
+
+        shell: bash
