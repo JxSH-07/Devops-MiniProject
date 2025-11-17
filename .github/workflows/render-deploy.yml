@@ -2,8 +2,7 @@ name: Deploy to Render via API
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -13,12 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Trigger Render Deployment
+      - name: Force rebuild and deploy on Render
         run: |
-          echo "Triggering Render Deploy..."
-
           curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json"
-
-        shell: bash
+          -H "accept: application/json" \
+          -H "authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "content-type: application/json" \
+          -d '{"clearCache": true}'
